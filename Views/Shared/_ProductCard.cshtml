@@ -1,0 +1,45 @@
+@model ProductCatalog.Models.Product
+
+@{
+    var icon = Model.Category switch
+    {
+        "Электроника" => "▣",
+        "Компьютерлік техника" => "⌘",
+        "Аксессуарлар" => "◈",
+        "Смарт құрылғылар" => "◷",
+        _ => "◇"
+    };
+    var visualClass = Model.Category switch
+    {
+        "Электроника" => "visual-electronics",
+        "Компьютерлік техника" => "visual-computers",
+        "Аксессуарлар" => "visual-accessories",
+        "Смарт құрылғылар" => "visual-smart",
+        _ => "visual-default"
+    };
+}
+
+<article class="product-card" data-product-card data-name="@Model.Name" data-category="@Model.Category">
+    <a class="product-visual @visualClass" asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id" aria-label="@Model.Name тауары туралы">
+        <span class="visual-orbit"></span>
+        <span class="visual-icon" aria-hidden="true">@icon</span>
+        <span class="product-id">№ @Model.Id</span>
+        <span class="visual-tag">САПАЛЫ</span>
+    </a>
+    <div class="product-card-body">
+        <div class="product-category">@Model.Category</div>
+        <h3><a asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a></h3>
+        <div class="product-card-bottom">
+            <div class="product-price">@Model.Price.ToString("N0") <span>₸</span></div>
+            @if (Model.IsAvailable)
+            {
+                <span class="availability available"><span></span> Қолжетімді</span>
+            }
+            else
+            {
+                <span class="availability unavailable"><span></span> Уақытша жоқ</span>
+            }
+        </div>
+        <a class="product-link" asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id">Толығырақ <span aria-hidden="true">→</span></a>
+    </div>
+</article>

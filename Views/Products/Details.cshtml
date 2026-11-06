@@ -1,0 +1,63 @@
+@model ProductCatalog.Models.Product
+
+@{
+    ViewData["Title"] = Model.Name;
+    var icon = Model.Category switch
+    {
+        "Электроника" => "▣",
+        "Компьютерлік техника" => "⌘",
+        "Аксессуарлар" => "◈",
+        "Смарт құрылғылар" => "◷",
+        _ => "◇"
+    };
+    var visualClass = Model.Category switch
+    {
+        "Электроника" => "visual-electronics",
+        "Компьютерлік техника" => "visual-computers",
+        "Аксессуарлар" => "visual-accessories",
+        "Смарт құрылғылар" => "visual-smart",
+        _ => "visual-default"
+    };
+}
+
+<section class="details-section">
+    <div class="container">
+        <nav class="breadcrumb-line" aria-label="Навигация жолы">
+            <a asp-controller="Products" asp-action="Index">Басты бет</a><span>/</span><a asp-controller="Products" asp-action="Index" asp-fragment="catalog">Каталог</a><span>/</span><span>@Model.Name</span>
+        </nav>
+        <div class="details-card">
+            <div class="details-visual @visualClass">
+                <span class="visual-orbit"></span>
+                <span class="details-icon" aria-hidden="true">@icon</span>
+                <span class="product-id">№ @Model.Id</span>
+                <span class="visual-tag">САПАЛЫ</span>
+            </div>
+            <div class="details-info">
+                <span class="eyebrow"><span class="eyebrow-dot"></span> @Model.Category.ToUpperInvariant()</span>
+                <h1>@Model.Name</h1>
+                <p class="details-description">Сапа мен заманауи технологияны үйлестірген сенімді таңдау. Күнделікті жұмысыңыз бен демалысыңызды жаңа деңгейге көтеріңіз.</p>
+                <div class="details-divider"></div>
+                <div class="details-meta"><span>Тауар нөмірі</span><strong>#@Model.Id.ToString("D4")</strong></div>
+                <div class="details-meta"><span>Санаты</span><strong>@Model.Category</strong></div>
+                <div class="details-meta">
+                    <span>Қолжетімділігі</span>
+                    @if (Model.IsAvailable)
+                    {
+                        <strong class="availability available"><span></span> Қолжетімді</strong>
+                    }
+                    else
+                    {
+                        <strong class="availability unavailable"><span></span> Уақытша жоқ</strong>
+                    }
+                </div>
+                <div class="details-price">@Model.Price.ToString("N0") <span>₸</span></div>
+                <a class="btn btn-primary details-back" asp-controller="Products" asp-action="Index">← Каталогқа қайту</a>
+            </div>
+        </div>
+        <div class="details-assurance">
+            <div><span>✓</span><strong>Сапалы өнімдер</strong><small>Әр тауар мұқият таңдалған</small></div>
+            <div><span>◇</span><strong>Тиімді бағалар</strong><small>Сіз үшін қолжетімді ұсыныстар</small></div>
+            <div><span>⌂</span><strong>Жергілікті қолдау</strong><small>Қазақстандағы команда</small></div>
+        </div>
+    </div>
+</section>

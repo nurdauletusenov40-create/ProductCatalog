@@ -1,0 +1,124 @@
+@model IEnumerable<ProductCatalog.Models.Product>
+
+@{
+    ViewData["Title"] = "Каталог";
+    var products = Model.ToList();
+    var categories = (IEnumerable<string>)ViewBag.Categories;
+    var selectedCategory = (string)ViewBag.SelectedCategory;
+    var search = (string)ViewBag.Search;
+}
+
+<section class="hero-section">
+    <div class="hero-orb hero-orb-one"></div>
+    <div class="hero-orb hero-orb-two"></div>
+    <div class="container hero-content">
+        <div class="hero-copy">
+            <span class="eyebrow hero-eyebrow"><span class="eyebrow-dot"></span> СІЗ ҮШІН ТАҢДАЛҒАН ТЕХНОЛОГИЯЛАР</span>
+            <h1>Технологиялар әлеміне <span>қош келдіңіз!</span></h1>
+            <p>Өзіңізге қажетті заманауи тауарларды бір жерден табыңыз. Сапалы өнімдер, тиімді бағалар және ыңғайлы каталог — барлығы сіз үшін.</p>
+            <a class="btn btn-hero" href="#catalog">Каталогты көру <span aria-hidden="true">↗</span></a>
+            <div class="hero-note"><span class="hero-note-icon">✦</span> Технологияны таңдаудың оңай жолы</div>
+        </div>
+        <div class="hero-art" aria-label="Заманауи технология құрылғыларының иллюстрациясы" role="img">
+            <div class="art-glow"></div>
+            <div class="art-circle art-circle-back"></div>
+            <div class="device-laptop">
+                <div class="laptop-screen"><div class="screen-shine"></div><span class="screen-symbol">✦</span><span class="screen-line"></span><span class="screen-line short"></span></div>
+                <div class="laptop-base"></div>
+            </div>
+            <div class="device-phone"><div class="phone-camera"></div><span>◉</span></div>
+            <div class="device-watch"><span class="watch-face">◷</span></div>
+            <div class="floating-chip chip-one">✦  Жаңа мүмкіндіктер</div>
+            <div class="floating-chip chip-two"><span class="pulse-dot"></span> Сапаға кепілдік</div>
+        </div>
+        <div class="hero-bottom-line"><span>01</span><span class="hero-line"></span><span>ТЕХНОЛОГИЯ ЖАҢА ДЕҢГЕЙДЕ</span></div>
+    </div>
+</section>
+
+<section class="stats-section" aria-label="Каталог статистикасы">
+    <div class="container">
+        <div class="stats-panel">
+            <div class="stat-item">
+                <span class="stat-icon stat-icon-blue">▦</span>
+                <div><strong>@ViewBag.ProductCount</strong><span>каталогтағы тауар</span></div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-icon stat-icon-green">✓</span>
+                <div><strong>@ViewBag.AvailableCount</strong><span>қазір қолжетімді</span></div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-icon stat-icon-violet">◇</span>
+                <div><strong>@ViewBag.CategoryCount</strong><span>тауар санаты</span></div>
+            </div>
+            <div class="stats-caption">Таңдауыңызға арналған<br />сенімді дүкен</div>
+        </div>
+    </div>
+</section>
+
+<section class="catalog-section section-space" id="catalog">
+    <div class="container">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow"><span class="eyebrow-dot"></span> БІЗДІҢ ҰСЫНЫС</span>
+                <h2>Танымал тауарлар</h2>
+                <p>Сізге керектің барлығы — бір каталогта.</p>
+            </div>
+            <form class="catalog-search" asp-controller="Products" asp-action="Index" method="get" role="search">
+                <span aria-hidden="true">⌕</span>
+                <input id="productSearch" type="search" name="search" value="@search" placeholder="Тауар іздеу..." aria-label="Тауар іздеу..." />
+                @if (!string.IsNullOrWhiteSpace(selectedCategory))
+                {
+                    <input type="hidden" name="category" value="@selectedCategory" />
+                }
+            </form>
+        </div>
+
+        <div class="category-pills" id="categories" aria-label="Тауар санаттары">
+            <a class="category-pill @(string.IsNullOrEmpty(selectedCategory) ? "active" : "")" asp-controller="Products" asp-action="Index" asp-route-search="@search">
+                <span>✦</span> Барлық санаттар
+            </a>
+            @foreach (var category in categories)
+            {
+                var icon = category switch
+                {
+                    "Электроника" => "▣",
+                    "Компьютерлік техника" => "⌘",
+                    "Аксессуарлар" => "◈",
+                    "Смарт құрылғылар" => "◷",
+                    _ => "◇"
+                };
+                <a class="category-pill @(selectedCategory == category ? "active" : "")" asp-controller="Products" asp-action="Index" asp-route-category="@category" asp-route-search="@search">
+                    <span>@icon</span> @category
+                </a>
+            }
+        </div>
+
+        <div class="catalog-results">
+            <p class="results-label"><span id="resultsCount">@products.Count</span> <span>Табылған тауарлар</span></p>
+        </div>
+        <div class="product-grid" id="productGrid">
+            @foreach (var product in products)
+            {
+                <partial name="_ProductCard" model="product" />
+            }
+        </div>
+        <div class="empty-state @(products.Count == 0 ? "" : "d-none")" id="emptyState">
+            <span class="empty-icon">⌕</span>
+            <h3>Тауар табылмады</h3>
+            <p>Іздеу сөзін өзгертіп немесе басқа санатты таңдап көріңіз.</p>
+            <a class="btn btn-outline-primary rounded-pill px-4" asp-controller="Products" asp-action="Index">Барлық тауарды көрсету</a>
+        </div>
+    </div>
+</section>
+
+<section class="catalog-cta">
+    <div class="container">
+        <div class="cta-card">
+            <div class="cta-pattern"></div>
+            <div><span class="eyebrow cta-eyebrow">ӨЗІҢІЗГЕ САЙ ТАҢДАУ</span><h2>Жақсы технология — жақсы күннің бастауы.</h2></div>
+            <a class="btn btn-cta" href="#categories">Санаттарды қарау <span aria-hidden="true">↗</span></a>
+        </div>
+    </div>
+</section>
