@@ -1,28 +1,9 @@
 @model ProductCatalog.Models.Product
 
-@{
-    var icon = Model.Category switch
-    {
-        "Электроника" => "▣",
-        "Компьютерлік техника" => "⌘",
-        "Аксессуарлар" => "◈",
-        "Смарт құрылғылар" => "◷",
-        _ => "◇"
-    };
-    var visualClass = Model.Category switch
-    {
-        "Электроника" => "visual-electronics",
-        "Компьютерлік техника" => "visual-computers",
-        "Аксессуарлар" => "visual-accessories",
-        "Смарт құрылғылар" => "visual-smart",
-        _ => "visual-default"
-    };
-}
-
 <article class="product-card" data-product-card data-name="@Model.Name" data-category="@Model.Category">
-    <a class="product-visual @visualClass" asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id" aria-label="@Model.Name тауары туралы">
-        <span class="visual-orbit"></span>
-        <span class="visual-icon" aria-hidden="true">@icon</span>
+    <a class="product-visual" asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id" aria-label="@Model.Name тауары туралы">
+        <img class="product-photo" src="@Model.ImageUrl" alt="@Model.Name тауарының суреті" loading="lazy" />
+        <span class="photo-shade"></span>
         <span class="product-id">№ @Model.Id</span>
         <span class="visual-tag">САПАЛЫ</span>
     </a>

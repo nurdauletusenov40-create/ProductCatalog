@@ -22,4 +22,7 @@ public class Product
 
     [Display(Name = "Қолжетімді")]
     public bool IsAvailable { get; set; }
+
+    [Display(Name = "Тауар суреті")]
+    public string ImageUrl { get; set; } = string.Empty;
 }

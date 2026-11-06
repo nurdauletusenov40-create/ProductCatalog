@@ -2,22 +2,6 @@
 
 @{
     ViewData["Title"] = Model.Name;
-    var icon = Model.Category switch
-    {
-        "Электроника" => "▣",
-        "Компьютерлік техника" => "⌘",
-        "Аксессуарлар" => "◈",
-        "Смарт құрылғылар" => "◷",
-        _ => "◇"
-    };
-    var visualClass = Model.Category switch
-    {
-        "Электроника" => "visual-electronics",
-        "Компьютерлік техника" => "visual-computers",
-        "Аксессуарлар" => "visual-accessories",
-        "Смарт құрылғылар" => "visual-smart",
-        _ => "visual-default"
-    };
 }
 
 <section class="details-section">
@@ -26,9 +10,9 @@
             <a asp-controller="Products" asp-action="Index">Басты бет</a><span>/</span><a asp-controller="Products" asp-action="Index" asp-fragment="catalog">Каталог</a><span>/</span><span>@Model.Name</span>
         </nav>
         <div class="details-card">
-            <div class="details-visual @visualClass">
-                <span class="visual-orbit"></span>
-                <span class="details-icon" aria-hidden="true">@icon</span>
+            <div class="details-visual">
+                <img class="details-photo" src="@Model.ImageUrl" alt="@Model.Name тауарының суреті" />
+                <span class="photo-shade"></span>
                 <span class="product-id">№ @Model.Id</span>
                 <span class="visual-tag">САПАЛЫ</span>
             </div>

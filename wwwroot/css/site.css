@@ -114,6 +114,13 @@ a { color: inherit; text-decoration: none; }
 .visual-accessories { background: linear-gradient(145deg, #f3efff, #e9e1ff); }
 .visual-smart { background: linear-gradient(145deg, #e8f8f5, #d8f1ed); }
 .visual-default { background: linear-gradient(145deg, #f0f3f8, #e1e7f0); }
+.product-photo, .details-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+.product-photo { object-position: center; }
+.product-card:hover .product-photo { transform: scale(1.055); }
+.photo-shade { position: absolute; inset: 0; background: linear-gradient(180deg, #10182838, transparent 37%, #1018280d); pointer-events: none; }
+.product-id, .visual-tag { z-index: 1; }
+.product-id { padding: 4px 7px; border-radius: 5px; background: #ffffffdc; color: #475467; }
+.visual-tag { background: #ffffffdf; color: #344054; }
 .visual-orbit { position: absolute; width: 132px; height: 132px; border: 1px solid #ffffffbd; border-radius: 50%; box-shadow: 0 0 0 18px #ffffff38, 0 0 0 36px #ffffff24; }
 .visual-icon { position: relative; z-index: 1; display: grid; width: 78px; height: 78px; place-items: center; border: 1px solid #ffffffa1; border-radius: 23px; background: linear-gradient(145deg, #ffffffeb, #ffffffad); color: #5366cf; font-size: 38px; box-shadow: 0 12px 25px #3f55a31a; transition: transform .25s; }
 .product-card:hover .visual-icon { transform: scale(1.08) rotate(-4deg); }
@@ -155,6 +162,9 @@ a { color: inherit; text-decoration: none; }
 .breadcrumb-line > span:last-child { color: #344054; font-weight: 600; }
 .details-card { display: grid; grid-template-columns: 1fr 1fr; gap: 55px; padding: 34px; border: 1px solid #edf0f5; border-radius: 19px; background: #fff; box-shadow: 0 14px 40px #1c31500a; }
 .details-visual { min-height: 410px; height: auto; border-radius: 14px; }
+.details-photo { object-fit: cover; }
+.details-visual .product-id { top: 22px; left: 22px; font-size: 12px; }
+.details-visual .visual-tag { top: 20px; right: 20px; }
 .details-visual .visual-orbit { width: 250px; height: 250px; box-shadow: 0 0 0 30px #ffffff38, 0 0 0 60px #ffffff24; }
 .details-icon { position: relative; z-index: 1; display: grid; width: 145px; height: 145px; place-items: center; border: 1px solid #ffffffb8; border-radius: 39px; background: linear-gradient(145deg, #ffffffed, #ffffffa6); color: #5366cf; font-size: 72px; box-shadow: 0 20px 45px #3f55a326; }
 .details-visual .product-id { top: 22px; left: 22px; font-size: 12px; }
